@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>后台登录</title> 
+  {css href="__LOGINGCSS__/style.css" /}
+  {css href="__LAYUI__/css/layui.css" / }
+  {js  href ="__LAYUI__/layui.all.js"}
+  </head>
+<body>
+	<div id="clouds">
+		<div class="cloud x1"></div>
+		<!-- Time for multiple clouds to dance around -->
+		<div class="cloud x2"></div>
+		<div class="cloud x3"></div>
+		<div class="cloud x4"></div>
+		<div class="cloud x5"></div>
+	</div>
+	<div class="container">
+		<div id="login">
+			<form class = "layui-form" method="post">
+		     	<fieldset class="clearfix">
+		            <p><span class="fontawesome-user"></span>
+		               <input type="text" name="username" lay-verify="required" placeholder="username" autocomplete="off"
+                   			  class="layui-input">
+		            </p> <!-- JS because of IE support; better: placeholder="Username" -->
+		            <p><span class="fontawesome-lock"></span>
+		               <input type="password" name="password" required lay-verify="required" placeholder="password" autocomplete="off"
+                   class="layui-input">
+		            </p> 
+		            <p><button class="layui-btn" lay-submit="" lay-filter="sign">Sign In</button></p>
+		          </fieldset>
+		    </form>
+		        <!-- <p>Not a member? <a href="#" class="blue">Sign up now</a><span class="fontawesome-arrow-right"></span></p> -->
+		</div> <!-- end login -->     
+	 </div>
+	 
+	 <script type = "text/javascript">
+		layui.use(['layer', 'form'], function(){
+  			var layer = layui.layer
+  			,form = layui.form,
+  			$ = layui.jquery;
+  			form.on('submit(sign)', function(data){
+  			    $.ajax({
+  			    	url:'{:url("login/login")}',
+  			    	method:'post',
+  			    	data:data.field,
+  			    	dataType:'JSON',
+  			    	cache:false,
+  			    	success:function(msg){
+  			    		console.log(msg);
+  			    		if(msg.code != '1'){
+  			    			layer.msg(msg.msg);
+  			    			return;
+  			    		}else{
+  			    			window.location.hred = '{:url("admin/index/index")}'
+  			    		}
+  			    	}
+  			    });
+  			 });
+		}); 
+		
+	
+     </script>
+    
+</body>
+</html>
